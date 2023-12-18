@@ -9,7 +9,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'stock', 'image')
+    list_display = ('name', 'price', 'stock', 'description', 'image')
 
 @admin.register(Shoes)
 class ShoesAdmin(admin.ModelAdmin):
