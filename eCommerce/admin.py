@@ -1,12 +1,7 @@
 from django.contrib import admin
-from .models import Category, Customer, Product, Order, Shoes, Clothes, Gadget, Skincare, Poultry
+from .models import Customer, Product, Order, Shoes, Clothes, Gadget, Skincare, Poultry
 
 # Register your models here.
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
@@ -14,7 +9,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price',)
+    list_display = ('name', 'price', 'stock', 'image')
 
 @admin.register(Shoes)
 class ShoesAdmin(admin.ModelAdmin):

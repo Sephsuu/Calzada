@@ -2,11 +2,6 @@ from django.db import models
 import datetime
 
 # Create your models here.
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -31,12 +26,7 @@ class Product(models.Model):
 class Shoes(Product):
     brand = models.CharField(max_length=250)
     model = models.CharField(max_length=250)
-    COLOR_CHOICES = [
-        ('red', 'Red'),
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-    ]
-    color = models.CharField(max_length=10, choices=COLOR_CHOICES)
+    color = models.CharField(max_length=50)
     SIZE_CHOICES = [
         ('9', '9'),
         ('10', '10'),
@@ -45,14 +35,12 @@ class Shoes(Product):
     ]
     size = models.CharField(max_length=2, choices=SIZE_CHOICES)
 
+    class Meta:
+        verbose_name_plural = 'shoes'
+
 class Clothes(Product):
     model = models.CharField(max_length=250)
-    COLOR_CHOICES = [
-        ('red', 'Red'),
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-    ]
-    color = models.CharField(max_length=10, choices=COLOR_CHOICES)
+    color = models.CharField(max_length=50)
     SIZE_CHOICES = [
         ('XS', 'XS'),
         ('S', 'S'),
@@ -62,15 +50,13 @@ class Clothes(Product):
     ]
     size = models.CharField(max_length=3, choices=SIZE_CHOICES)
 
+    class Meta:
+        verbose_name_plural = 'clothes'
+
 class Gadget(Product):
     brand = models.CharField(max_length=250)
     model = models.CharField(max_length=250)
-    COLOR_CHOICES = [
-        ('red', 'Red'),
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-    ]
-    color = models.CharField(max_length=10, choices=COLOR_CHOICES)
+    color = models.CharField(max_length=50)
     storage = models.CharField(max_length=10)
     size = models.CharField(max_length=50)
 
@@ -83,6 +69,9 @@ class Poultry(Product):
     breed = models.CharField(max_length=250)
     weight = models.IntegerField(default=0)
     quality = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = 'poultries'
 
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
