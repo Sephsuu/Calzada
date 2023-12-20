@@ -1,0 +1,36 @@
+.header{
+    height: 200px;
+}
+.alert{
+    background: gray;
+    color: white;
+}
+
+.header{
+    height: 140px;
+}
+.table-head{
+    outline: 1.5px solid black;
+}
+.table .product-name a{
+    color: black;
+    text-transform: uppercase;
+}
+.table a{
+    text-transform: uppercase;
+}
+.btn-filter{
+    width: auto;
+    height: auto;
+}
+.search-btn{
+    color: white;
+    background-color: gray;
+    transition: 0.5s;
+}
+.search-btn:hover{
+    color: gray;
+    background-color: white;
+    transition: 0.5s;
+    outline: 2px solid gray;
+}

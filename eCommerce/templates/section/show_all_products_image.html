@@ -1,0 +1,62 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header -->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">All Products</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3">Show w/ image</a>
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'show_all_products' %}">Show w/o image</a>
+        <form method="POST" action="" class="col-lg-8 col-sm-12">
+            {% csrf_token %}
+            <div class="input-group mt-3">
+                <input type="text" name="search" class="form-control" placeholder="Find a product" aria-label="Search" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn search-btn" type="submit" id="button-addon2">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <section>
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    
+    
+                {% for product in products %}
+                <div class="col mb-5">
+                    <div class="card h-100 product-item">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ product.name }}</h5>
+                                <!-- Product price-->
+                                <strong>₱</strong> {{ product.price }}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'login' %}">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+    
+    
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

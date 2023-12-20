@@ -1,0 +1,53 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header -->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Cloth Products</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'show_cloth_products_image' %}">Show w/ image</a>
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3">Show w/o image</a>
+        <form method="POST" action="" class="col-lg-8 col-sm-12">
+            {% csrf_token %}
+            <div class="input-group mt-3">
+                <input type="text" name="search" class="form-control" placeholder="Find a product" aria-label="Search" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn search-btn" type="submit" id="button-addon2">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table table-striped table-hover pb-4">
+            <thead class="table-head">
+                <tr>
+                    <th scope="col" class="col-4">Cloth Name</th>
+                    <th scope="col" class="col-4">Cloth Brand</th>
+                    <td align="center" scope="col" class="col-4"><b>Cloth Price</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cloth in clothes %}
+                <tr class="pb-6"> <!-- Adjust the padding value as needed -->
+                    <td scope="row" class="product-name"><a href=""><strong>{{ cloth.name }}</strong></a></td>
+                    <td>{{ cloth.model }}</td>
+                    <td align="center" class="pl-3"><a>₱ {{ cloth.price }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <center><p style="margin-top: 20px;">-- NOTHING FOLLOWS -- NOTHING FOLLOWS -- NOTHING FOLLOWS -- NOTHING FOLLOWS -- NOTHING FOLLOWS --</p></center>
+    </div>
+</div>
+
+{% endblock %}
