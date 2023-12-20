@@ -33,6 +33,9 @@ def logout_user(request):
     messages.success(request, ("Successfully logged out!"))
     return redirect('home')
 
+def register(request):
+    return render(request, 'section/register.html', {})
+
 def user_home(request):
     user = request.user
     products = Product.objects.all()

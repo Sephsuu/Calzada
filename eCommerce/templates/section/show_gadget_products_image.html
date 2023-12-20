@@ -15,7 +15,7 @@
     <div class="row">
         <a class="btn btn-filter search-btn col-2 m-2 mt-3">Show w/ image</a>
         <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'show_gadget_products' %}">Show w/o image</a>
-        <form method="POST" action="" class="col-lg-8 col-sm-12">
+        <form method="POST" action="{% url 'search_product' %}" class="col-lg-8 col-sm-12">
             {% csrf_token %}
             <div class="input-group mt-3">
                 <input type="text" name="search" class="form-control" placeholder="Find a product" aria-label="Search" aria-describedby="button-addon2">
