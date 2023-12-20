@@ -2,20 +2,20 @@
 
 {% block content %}
 
-<!-- Header -->
+<!-- Header-->
 <header class="bg-dark py-4 header">
     <div class="container">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">All Products</h1>
+            <h1 class="display-4 fw-bolder">Showing results for "{{ search }}"</h1>
         </div>
     </div>
 </header>
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-filter search-btn col-2 m-2 mt-3">Show w/ image</a>
-        <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'show_all_products' %}">Show w/o image</a>
-        <form method="POST" action="{% url 'search_product' %}" class="col-lg-8 col-sm-12">
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'show_all_products' %}">Go Back to Product List</a>
+        <a class="btn btn-filter search-btn col-2 m-2 mt-3" href="{% url 'user_home' %}">Back to Home</a>
+        <form method="POST" action="" class="col-lg-8 col-sm-12>
             {% csrf_token %}
             <div class="input-group mt-3">
                 <input type="text" name="search" class="form-control" placeholder="Find a product" aria-label="Search" aria-describedby="button-addon2">
@@ -25,7 +25,6 @@
             </div>
         </form>
     </div>
-
     <section>
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

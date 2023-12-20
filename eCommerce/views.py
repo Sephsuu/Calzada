@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from . models import Product, User, Shoes, Clothes, Gadget, Skincare, Poultry
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -96,3 +97,18 @@ def show_poultry_products_image(request):
     poultries = Poultry.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
     return render(request, 'section/show_poultry_products_image.html', {'poultries':poultries, 'message_data':messages_data})
+
+def search_product(request):
+    if request.method == "POST":
+        search = request.POST.get('search', '')  # Get the search query or default to an empty string
+        products = Product.objects.filter(
+            Q(name__icontains=search)
+        )
+        if products:
+            return render(request, 'section/search_product.html', {'search': search, 'products': products})
+        else:
+            no_results_message = "No products found matching your search."
+            return render(request, 'section/search_product.html', {'search': search, 'no_results_message': no_results_message})
+    else:
+        return render(request, 'section/search_product.html', {})
+    

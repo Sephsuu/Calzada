@@ -19,5 +19,5 @@ urlpatterns = [
     path('show_skincare_products_image/', views.show_skincare_products_image, name='show_skincare_products_image'),
     path('show_poultry_products/', views.show_poultry_products, name='show_poultry_products'),
     path('show_poultry_products_image/', views.show_poultry_products_image, name='show_poultry_products_image'),
-    
+    path('search_product', views.search_product, name='search_product'),
 ]
