@@ -10,14 +10,17 @@
         </div>
     </div>
 </header>
-
-<center>
-    <div class="container col-lg-6 col-sm-12 mt-5 mb-5">
-        <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            
-        </form>
+<div class="container m-5">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                
+                {{ form.as_p }}
+                <center><button type="submit" class="btn btn-secondary">Register</button></center>
+            </form>
+        </div>
     </div>
-</center>
+</div>
 
 {% endblock %}
