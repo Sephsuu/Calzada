@@ -39,7 +39,7 @@
             <tbody>
                 {% for shoe in shoes %}
                 <tr class="pb-6"> <!-- Adjust the padding value as needed -->
-                    <td scope="row" class="product-name"><a href=""><strong>{{ shoe.name }}</strong></a></td>
+                    <td scope="row" class="product-name"><a href="{% url 'product_detail' shoe.id %}"><strong>{{ shoe.name }}</strong></a></td>
                     <td>{{ shoe.brand }}</td>
                     <td>{{ shoe.model }}</td>
                     <td align="center">₱ {{ shoe.price }}</td>

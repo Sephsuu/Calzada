@@ -39,7 +39,7 @@
             <tbody>
                 {% for poultry in poultries %}
                 <tr class="pb-6"> <!-- Adjust the padding value as needed -->
-                    <td scope="row" class="product-name"><a href=""><strong>{{ poultry.name }}</strong></a></td>
+                    <td scope="row" class="product-name"><a href="{% url 'product_detail' poultry.id %}"><strong>{{ poultry.name }}</strong></a></td>
                     <td>{{ poultry.breed }}</td>
                     <td>{{ poultry.quality }}</td>
                     <td align="center" class="pl-3"><a>₱ {{ poultry.price }}</a></td>

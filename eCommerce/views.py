@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . models import Product, Shoes, Clothes, Gadget, Skincare, Poultry
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -63,62 +63,62 @@ def user_home(request):
 def show_all_products(request):
     products = Product.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_all_products.html', {'products':products, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_all_products.html', {'products':products, 'message_data':messages_data})
 
 def show_all_products_image(request):
     products = Product.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_all_products_image.html', {'products':products, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_all_products_image.html', {'products':products, 'message_data':messages_data})
 
 def show_shoe_products(request):
     shoes = Shoes.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_shoe_products.html', {'shoes':shoes, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_shoe_products.html', {'shoes':shoes, 'message_data':messages_data})
 
 def show_shoe_products_image(request):
     shoes = Shoes.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_shoe_products_image.html', {'shoes':shoes, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_shoe_products_image.html', {'shoes':shoes, 'message_data':messages_data})
 
 def show_cloth_products(request):
     clothes = Clothes.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_cloth_products.html', {'clothes':clothes, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_cloth_products.html', {'clothes':clothes, 'message_data':messages_data})
 
 def show_cloth_products_image(request):
     clothes = Clothes.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_cloth_products_image.html', {'clothes':clothes, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_cloth_products_image.html', {'clothes':clothes, 'message_data':messages_data})
 
 def show_gadget_products(request):
     gadgets = Gadget.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_gadget_products.html', {'gadgets':gadgets, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_gadget_products.html', {'gadgets':gadgets, 'message_data':messages_data})
 
 def show_gadget_products_image(request):
     gadgets = Gadget.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_gadget_products_image.html', {'gadgets':gadgets, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_gadget_products_image.html', {'gadgets':gadgets, 'message_data':messages_data})
 
 def show_skincare_products(request):
     skincares = Skincare.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_skincare_products.html', {'skincares':skincares, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_skincare_products.html', {'skincares':skincares, 'message_data':messages_data})
 
 def show_skincare_products_image(request):
     skincares = Skincare.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_skincare_products_image.html', {'skincares':skincares, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_skincare_products_image.html', {'skincares':skincares, 'message_data':messages_data})
 
 def show_poultry_products(request):
     poultries = Poultry.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_poultry_products.html', {'poultries':poultries, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_poultry_products.html', {'poultries':poultries, 'message_data':messages_data})
 
 def show_poultry_products_image(request):
     poultries = Poultry.objects.all().order_by('name')
     messages_data = messages.get_messages(request)
-    return render(request, 'section/show_poultry_products_image.html', {'poultries':poultries, 'message_data':messages_data})
+    return render(request, 'section/showProducts/show_poultry_products_image.html', {'poultries':poultries, 'message_data':messages_data})
 
 def search_product(request):
     if request.method == "POST":
@@ -134,3 +134,30 @@ def search_product(request):
     else:
         return render(request, 'section/search_product.html', {})
     
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    if hasattr(product, 'shoes'):
+        details = product.shoes 
+        template = 'section/productDetails/shoes_detail.html' 
+        print("This is a shoe product")
+    elif hasattr(product, 'clothes'):
+        details = product.clothes
+        template = 'section/productDetails/clothes_detail.html'
+    elif hasattr(product, 'gadget'):
+        details = product.gadget
+        template = 'section/productDetails/gadget_detail.html'  
+    elif hasattr(product, 'skincare'):
+        details = product.skincare
+        template = 'section/productDetails/skincare_detail.html'  
+    elif hasattr(product, 'poultry'):
+        details = product.poultry
+        template = 'section/productDetails/poultry_detail.html'  
+
+    return render(request, template, {'product': product, 'details': details})
+
+
+
+
+
+
