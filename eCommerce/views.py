@@ -136,6 +136,8 @@ def search_product(request):
     
 def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+    details = ''
+    template = ''
 
     if hasattr(product, 'shoes'):
         details = product.shoes 
