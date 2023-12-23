@@ -10,6 +10,7 @@ class Customer(models.Model):
     phone = models.CharField(max_length=10)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -76,7 +77,7 @@ class Poultry(Product):
 
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     address = models.CharField(max_length=100, default='', blank=False)
     phone = models.CharField(max_length=20, default='', blank=True)
@@ -85,3 +86,8 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+    
+    @property
+    def get_total(self):
+        total = self.product * self.quantity
+        return self.get_total

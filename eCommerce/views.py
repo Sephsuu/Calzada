@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from . models import Product, Shoes, Clothes, Gadget, Skincare, Poultry
+from . models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
@@ -136,30 +136,26 @@ def search_product(request):
     
 def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    details = ''
-    template = ''
 
     if hasattr(product, 'shoes'):
-        details = product.shoes 
-        template = 'section/productDetails/shoes_detail.html' 
+        products = Shoes.objects.all()
+        details = product.shoes
+        template = 'section/productDetails/gadget_detail.html' 
         print("This is a shoe product")
     elif hasattr(product, 'clothes'):
         details = product.clothes
         template = 'section/productDetails/clothes_detail.html'
     elif hasattr(product, 'gadget'):
+        products = Gadget.objects.all()
         details = product.gadget
         template = 'section/productDetails/gadget_detail.html'  
     elif hasattr(product, 'skincare'):
-        details = product.skincare
+        gadget_product = product.gadget  # Retrieve Gadget object
+        details = gadget_product
         template = 'section/productDetails/skincare_detail.html'  
     elif hasattr(product, 'poultry'):
         details = product.poultry
         template = 'section/productDetails/poultry_detail.html'  
 
-    return render(request, template, {'product': product, 'details': details})
-
-
-
-
-
+    return render(request, template, {'product': product, 'details': details, 'products': products})
 

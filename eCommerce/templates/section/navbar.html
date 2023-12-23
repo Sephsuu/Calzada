@@ -9,7 +9,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Product List</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <center>
                             <li><a class="dropdown-item" href="{% url 'show_all_products' %}">All Products</a></li>
@@ -22,19 +22,24 @@
                         </center>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                 {% endif %}
             </ul>
-            <form class="d-flex">
+            <form class="ml-4" action="{% url 'cart' %}">
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
             </form>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> -->
+                <a href="" class="ml-4" style="color: black; font-size: 24px;"><i class="fas fa-user-circle"></i></a>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
