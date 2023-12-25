@@ -7,6 +7,7 @@
     <div class="container">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Calzada Register</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Register a Calzada account.</p>
         </div>
     </div>
 </header>
@@ -17,7 +18,7 @@
                 {% csrf_token %}
                 
                 {{ form.as_p }}
-                <center><button type="submit" class="btn btn-secondary">Register</button></center>
+                <center><button type="submit" class="btn btn-secondary mb-5">Register</button></center>
             </form>
         </div>
     </div>
