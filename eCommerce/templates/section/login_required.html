@@ -1,0 +1,33 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Calzada Login</h1>
+            <p class="lead fw-normal text-white-50 mb-0">You need to login first to view details.</p>
+        </div>
+    </div>
+</header>
+
+<center>
+    <div class="container col-lg-6 col-sm-12 mt-5 mb-5">
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control">
+            </div>
+            <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control">
+            </div>
+            <a href="{% url 'register' %}" style="color: black;">Don't have an account? Register Here!</a><br>
+            <button type="submit" class="btn btn-secondary mt-3">Submit</button>
+        </form>
+    </div>
+</center>
+
+{% endblock %}

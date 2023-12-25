@@ -32,6 +32,9 @@ def login_user(request):
     else:
         return render(request, 'section/login.html', {})
 
+def login_required(request):
+    return render(request, 'section/login_required.html', {})
+
 def logout_user(request):
     logout(request)
     messages.success(request, ("Successfully logged out!"))
@@ -135,7 +138,8 @@ def search_product(request):
         return render(request, 'section/search_product.html', {})
     
 def product_detail(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    product = get_object_or_404(Product, id=product_id)
+    thing = Product.objects.get(id=product_id)
 
     if hasattr(product, 'shoes'):
         products = Shoes.objects.all()
@@ -143,6 +147,7 @@ def product_detail(request, product_id):
         template = 'section/productDetails/gadget_detail.html' 
         print("This is a shoe product")
     elif hasattr(product, 'clothes'):
+        products = Clothes.objects.all()
         details = product.clothes
         template = 'section/productDetails/clothes_detail.html'
     elif hasattr(product, 'gadget'):
@@ -150,12 +155,13 @@ def product_detail(request, product_id):
         details = product.gadget
         template = 'section/productDetails/gadget_detail.html'  
     elif hasattr(product, 'skincare'):
-        gadget_product = product.gadget  # Retrieve Gadget object
-        details = gadget_product
+        products = Skincare.objects.all()
+        details = product.skincare
         template = 'section/productDetails/skincare_detail.html'  
     elif hasattr(product, 'poultry'):
+        products = Poultry.objects.all()
         details = product.poultry
         template = 'section/productDetails/poultry_detail.html'  
 
-    return render(request, template, {'product': product, 'details': details, 'products': products})
+    return render(request, template, {'product': product, 'details': details, 'products': products, 'thing': thing})
 

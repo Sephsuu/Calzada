@@ -1,7 +1,11 @@
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container px-4 px-lg-5">
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="{% url "user_home" %}">Calzada</a>
+        {% else %}
         <a class="navbar-brand" href="{% url "home" %}">Calzada</a>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -12,28 +16,28 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <center>
-                            <li><a class="dropdown-item" href="{% url 'show_all_products' %}">All Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_all_products_image' %}">All Products</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="{% url 'show_shoe_products' %}">Shoe Products</a></li>
-                            <li><a class="dropdown-item" href="{% url 'show_cloth_products' %}">Cloth Products</a></li>
-                            <li><a class="dropdown-item" href="{% url 'show_gadget_products' %}">Gadget Products</a></li>
-                            <li><a class="dropdown-item" href="{% url 'show_skincare_products' %}">Skincare Products</a></li>
-                            <li><a class="dropdown-item" href="{% url 'show_poultry_products' %}">Poultry Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_shoe_products_image' %}">Shoe Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_cloth_products_image' %}">Cloth Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_gadget_products_image' %}">Gadget Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_skincare_products_image' %}">Skincare Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_poultry_products_image' %}">Poultry Products</a></li>
                         </center>
                     </ul>
                 </li>
                 {% endif %}
             </ul>
             <form class="ml-4" action="{% url 'cart' %}">
-                <button class="btn btn-outline-dark" type="submit">
+                <a href="{% url 'cart' %}" class="btn btn-outline-dark">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                </a>
             </form>
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
-                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                 <a href="" class="ml-4" style="color: black; font-size: 24px;"><i class="fas fa-user-circle"></i></a>
                 {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>

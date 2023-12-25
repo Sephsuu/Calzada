@@ -1,1 +1,98 @@
-<h1>{{ product.name }}</h1>
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-3">
+    <div class="container px-4 px-lg-5 my-4">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{{ details.name }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{{ details.description }}</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<div class="container">
+    <div class="row">
+        <div class="card mt-4 col-lg-6 col-sm-12 d-block">
+            <center><img src="{{ details.image.url }}" class="card-img-top" style="width: 12rem;" alt="..."></center>
+            <div class="card-body">
+            <h5 class="card-title display-6"><strong>{{ details.name }}</strong></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item fs-4">Price: <strong>₱{{ details.price }}</strong></li>
+                <li class="list-group-item fs-4">Stock: <strong>{{ details.stock }}</strong></li>
+                <li class="list-group-item fs-4">Brand: <strong>{{ details.brand }}</strong></li>
+                <li class="list-group-item fs-4">Skincare Type: <strong>{{ details.skincare_type }}</strong></li>
+                <li class="list-group-item fs-4">Skin Type: <strong>{{ details.skintype }}</strong></li>
+            </ul>
+            <div class="card-body">
+            <center>
+                <button href="#" class="card-link btn btn-dark" type="button" value="{{ thing.id }}" id="add-cart">Add to Cart</button>
+                <button href="#" class="card-link btn btn-outline-dark">Go to Homepage</button>
+            </center>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <center><h1 class="mt-4">Products you might also like</h1></center>
+            <section class="py-5">
+                <div class="container px-4 px-lg-5">
+                    <div class="row justify-content-center">
+            
+            
+                        {% for product in products %}
+                        <div class="col-lg-6 col-sm-12 mb-5">
+                            <div class="card h-100 product-item">
+                                <!-- Product image-->
+                                <center><img class="card-img-top" style="width: 8rem;" src="{{ product.image.url }}" alt="..." /></center>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ product.name }}</h5>
+                                        <!-- Product price-->
+                                        <strong>₱</strong> {{ product.price }}
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><button href="#" class="card-link btn btn-dark w-100" type="button" value="{{ thing.id }}" id="add-cart">Add to Cart</button></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-2 w-100" href="{% url 'product_detail' product.id %}">Details</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+            
+            
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on('click', '#add-cart', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_add' %}",
+            data: {
+                product_id: $('#add-cart').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                console.log(json)
+                document.getElementById("cart_quantity").textContent = json.qty
+            },
+            error: function(xhr, errmsg, err) {
+                
+            }
+        });
+        
+    })
+</script>
+
+{% endblock %}
