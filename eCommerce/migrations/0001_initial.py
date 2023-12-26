@@ -97,7 +97,6 @@ class Migration(migrations.Migration):
                 ('phone', models.CharField(max_length=10)),
                 ('email', models.EmailField(max_length=100)),
                 ('password', models.CharField(max_length=100)),
-                ('user', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
