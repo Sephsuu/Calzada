@@ -85,28 +85,39 @@
         </div>
     </div>
 </div>
+
 <script>
     $(document).on('click', '#add-cart', function(e) {
         e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'cart_add' %}",
-            data: {
-                product_id: $('#add-cart').val(),
-                product_qty: $('#qty-cart option:selected').text(),
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                action: 'post'
-            },
-            success: function(json) {
-                console.log(json)
-                document.getElementById("cart_quantity").textContent = json.qty
-            },
-            error: function(xhr, errmsg, err) {
-                
-            }
-        });
+        var selectedQty = $('#qty-cart option:selected').text();
         
-    })
+        if (selectedQty === 'Select Quantity') {
+            $('#modal-message').text('Please select quantity');
+            $('#myModal').modal('show');
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'cart_add' %}",
+                data: {
+                    product_id: $('#add-cart').val(),
+                    product_qty: selectedQty,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    console.log(json);
+                    document.getElementById("cart_quantity").textContent = json.qty;
+                    // Construct the message with quantity and product name
+                    var message = selectedQty + 'x ' + '{{ details.name }}' + ' was successfully added to cart.';
+                    $('#modal-message').text(message);
+                    $('#myModal').modal('show');
+                },
+                error: function(xhr, errmsg, err) {
+
+                }
+            });
+        }
+    });
 </script>
 
 {% endblock %}
