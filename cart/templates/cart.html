@@ -37,8 +37,8 @@
           <div class="col-md-4">
             <div class="row">
                 <center>
-                    <button class="btn btn-secondary col-12 w-75 mt-4">Update</button>
-                    <button class="btn btn-danger col-12 w-75 mt-2 mb-4">Remove</button>
+                    <a class="btn btn-secondary col-12 w-75 mt-4" href="{% url 'user_home' %}">Home</a>
+                    <button type="button" class="btn btn-danger col-12 w-75 mt-2 delete-product" data-index="{{ item.product_id }}" data-product-name="{{ item.product }}">Remove</button>
                 </center>
             </div>
           </div>
@@ -50,6 +50,16 @@
         <h1 class="mt-5">You have an empty cart</h1>
         <h3 class="display-6">Shop Now</h3>
         <div class="row">
+          {% if user.is_authenticated  %}
+          <div class="btn-group btn-group-sm mt-2 mb-5" role="group" aria-label="Basic outlined example">
+            <a href="{% url 'show_cloth_products_image' %}" type="button" class="btn btn-outline-dark">Cloth Product</a>
+            <a href="{% url 'show_gadget_products_image' %}" type="button" class="btn btn-outline-dark">Gadget Product</a>
+            <a href="{% url 'show_poultry_products_image' %}" type="button" class="btn btn-outline-dark">Poultry Product</a>
+            <a href="{% url 'show_shoe_products_image' %}" type="button" class="btn btn-outline-dark">Shoe Product</a>
+            <a href="{% url 'show_skincare_products_image' %}" type="button" class="btn btn-outline-dark">Skincare Product</a>
+          </div>
+            <center><a href="{% url 'user_home' %}" class="btn btn-dark w-50">Go Back to Home</a></div><center>
+          {% else %}
           <div class="btn-group btn-group-sm mt-2 mb-5" role="group" aria-label="Basic outlined example">
             <a href="{% url 'login_required' %}" type="button" class="btn btn-outline-dark">Cloth Product</a>
             <a href="{% url 'login_required' %}" type="button" class="btn btn-outline-dark">Gadget Product</a>
@@ -57,10 +67,42 @@
             <a href="{% url 'login_required' %}" type="button" class="btn btn-outline-dark">Shoe Product</a>
             <a href="{% url 'login_required' %}" type="button" class="btn btn-outline-dark">Skincare Product</a>
           </div>
+            <center><a href="{% url 'home' %}" class="btn btn-dark w-50">Go Back to Home</a></center>
+          {% endif %}
         </div>
       </center>
   {% endif%}
 <br><br><br><br><br>
 </div>
+
+<!-- ... (existing HTML content) ... -->
+
+<script>
+  $(document).on('click', '.delete-product', function(e) {
+      e.preventDefault();
+      
+      var productName = $(this).data('product-name');
+      $('#deleteModalBody').text(productName + ' was deleted from the cart');
+      $('#deleteModal').modal('show'); 
+      
+      $.ajax({
+          type: 'POST',
+          url: "{% url 'cart_delete' %}",
+          data: {
+              product_id: $(this).data('index'),
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              action: 'post'
+          },
+          success: function(json) {
+          },
+          error: function(xhr, errmsg, err) {
+              // Handle errors if needed
+          }
+      });
+  });
+</script>
+
+
+<!-- ... (rest of your HTML code) ... -->
 
 {% endblock %}

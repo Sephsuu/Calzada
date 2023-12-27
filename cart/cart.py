@@ -35,6 +35,7 @@ class Cart():
             quantity = self.cart[str(product.id)]
             total_price = product.price * quantity  # Calculate total price for the product
             cart_items.append({
+                'product_id': product.id,
                 'product': product,
                 'quantity': quantity,
                 'price': product.price,
@@ -47,4 +48,11 @@ class Cart():
     def get_qty(self):
         quantities = self.cart
         return quantities
+    
+    def delete(self, product):
+        product_id = str(product)
+        if product_id in self.cart:
+            del self.cart[product_id]
+        
+        self.session.modified = True
     
