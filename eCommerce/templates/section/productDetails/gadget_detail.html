@@ -24,9 +24,26 @@
                 <li class="list-group-item fs-4">Stock: <strong>{{ details.stock }}</strong></li>
                 <li class="list-group-item fs-4">Brand: <strong>{{ details.brand }}</strong></li>
                 <li class="list-group-item fs-4">Model: <strong>{{ details.model }}</strong></li>
+                <li class="list-group-item fs-4">Color: <strong>{{ details.color }}</strong></li>
                 <li class="list-group-item fs-4">Storage: <strong>{{ details.storage }}</strong></li>
                 <li class="list-group-item fs-4">Size: <strong>{{ details.size }}</strong></li>
-                <li class="list-group-item fs-4">Color: <strong>{{ details.color }}</strong></li>
+                <div class="row">
+                    <div class="col-6">
+                        <li class="list-group-item fs-4">Quantity:</li>
+                    </div>
+                    <div class="col-6">
+                        <center>
+                            <select class="form-select mt-2" aria-label="Default select example" id="qty-cart">
+                                <option selected>Select Quantity</option>
+                                {% if stock_range %}
+                                {% for i in stock_range %}
+                                    <option value="{{ i }}">{{ i|add:1  }}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </center>
+                    </div>
+                </div>
             </ul>
             <div class="card-body">
             <center>
@@ -39,9 +56,7 @@
             <center><h1 class="mt-4">Products you might also like</h1></center>
             <section class="py-5">
                 <div class="container px-4 px-lg-5">
-                    <div class="row justify-content-center">
-            
-            
+                    <div class="row justify-content-center">  
                         {% for product in products %}
                         <div class="col-lg-6 col-sm-12 mb-5">
                             <div class="card h-100 product-item">
@@ -59,21 +74,18 @@
                                 <!-- Product actions-->
                                 
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><button href="#" class="card-link btn btn-dark w-100" type="button" value="{{ thing.id }}" id="add-cart">Add to Cart</button></div>
+                                    <div class="text-center"><a class="btn btn-dark w-100" href="{% url 'product_detail' product.id %}">Add to Cart</a></div>
                                     <div class="text-center"><a class="btn btn-outline-dark mt-2 w-100" href="{% url 'product_detail' product.id %}">Details</a></div>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
-            
-            
                     </div>
                 </div>
             </section>
         </div>
     </div>
 </div>
-
 <script>
     $(document).on('click', '#add-cart', function(e) {
         e.preventDefault();
@@ -82,6 +94,7 @@
             url: "{% url 'cart_add' %}",
             data: {
                 product_id: $('#add-cart').val(),
+                product_qty: $('#qty-cart option:selected').text(),
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },

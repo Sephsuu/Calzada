@@ -141,26 +141,34 @@ def product_detail(request, product_id):
     thing = Product.objects.get(id=product_id)
 
     if hasattr(product, 'shoes'):
-        products = Shoes.objects.all()
         details = product.shoes
-        template = 'section/productDetails/gadget_detail.html' 
-        print("This is a shoe product")
+        products = Shoes.objects.all()
+        template = 'section/productDetails/gadget_detail.html'
     elif hasattr(product, 'clothes'):
-        products = Clothes.objects.all()
         details = product.clothes
+        products = Clothes.objects.all()
         template = 'section/productDetails/clothes_detail.html'
     elif hasattr(product, 'gadget'):
-        products = Gadget.objects.all()
         details = product.gadget
-        template = 'section/productDetails/gadget_detail.html'  
+        products = Gadget.objects.all()
+        template = 'section/productDetails/gadget_detail.html'
     elif hasattr(product, 'skincare'):
-        products = Skincare.objects.all()
         details = product.skincare
-        template = 'section/productDetails/skincare_detail.html'  
+        products = Skincare.objects.all()
+        template = 'section/productDetails/skincare_detail.html'
     elif hasattr(product, 'poultry'):
-        products = Poultry.objects.all()
         details = product.poultry
-        template = 'section/productDetails/poultry_detail.html'  
+        products = Poultry.objects.all()
+        template = 'section/productDetails/poultry_detail.html'
 
-    return render(request, template, {'product': product, 'details': details, 'products': products, 'thing': thing})
+    stock_range = range(details.stock + 1) if hasattr(details, 'stock') else None
+
+    return render(request, template, {
+        'product': product,
+        'details': details,
+        'products': products,
+        'thing': thing,
+        'stock_range': stock_range  # Pass the stock range to the template
+    })
+
 
