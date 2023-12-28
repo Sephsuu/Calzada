@@ -65,6 +65,7 @@
                         <!-- Modal message will be displayed here -->
                     </div>
                     <div class="modal-footer">
+                        <a class="btn btn-outline-dark" href="{% url 'cart' %}">View Cart</a>
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -84,7 +85,7 @@
 
         {% block content %}
 
-        {% endblock %}}
+        {% endblock %}
 
         <!-- Footer-->
         <footer class="py-5 bg-dark">

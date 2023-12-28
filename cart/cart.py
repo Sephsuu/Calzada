@@ -1,4 +1,5 @@
 from eCommerce.models import Product
+from cart.models import Order
 
 class Cart():
     def __init__(self, request):
@@ -27,19 +28,20 @@ class Cart():
         return len(self.cart)
     
     def get_product(self):
+        global cart_items
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
 
         cart_items = []
         for product in products:
             quantity = self.cart[str(product.id)]
-            total_price = product.price * quantity  # Calculate total price for the product
+            total_price = product.price * quantity 
             cart_items.append({
                 'product_id': product.id,
                 'product': product,
                 'quantity': quantity,
                 'price': product.price,
-                'total_price': total_price,  # Include the calculated total price in the cart item
+                'total_price': total_price, 
                 'image_url': product.image.url,
             })
 
@@ -56,3 +58,27 @@ class Cart():
         
         self.session.modified = True
     
+    def checkout(self, customer):
+        products = self.get_product()
+        total_amount = 0
+        
+        # Calculate total amount for the order
+        for item in products:
+            total_amount += item['total_price']
+
+        # Create an order and transfer items
+        order = Order.objects.create(
+            customer=customer,
+            total_amount=total_amount,
+            # Add other fields here as needed
+        )
+        for item in products:
+            order.products.add(item['product'])
+        
+        # Clear the cart after checkout
+        self.cart = {}
+        self.session['session_key'] = {} 
+        self.session.modified = True
+
+    def delete_all_orders(self):
+        Order.objects.all().delete()

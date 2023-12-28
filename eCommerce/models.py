@@ -73,20 +73,3 @@ class Poultry(Product):
 
     class Meta:
         verbose_name_plural = 'poultries'
-
-class Order(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    address = models.CharField(max_length=100, default='', blank=False)
-    phone = models.CharField(max_length=20, default='', blank=True)
-    date = models.DateField(default=datetime.date.today)
-    status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.id)
-    
-    @property
-    def get_total(self):
-        total = self.product * self.quantity
-        return self.get_total

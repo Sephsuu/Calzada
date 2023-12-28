@@ -161,7 +161,7 @@ def product_detail(request, product_id):
         products = Poultry.objects.all()
         template = 'section/productDetails/poultry_detail.html'
 
-    stock_range = range(details.stock + 1) if hasattr(details, 'stock') else None
+    stock_range = range(details.stock) if hasattr(details, 'stock') else None
 
     return render(request, template, {
         'product': product,

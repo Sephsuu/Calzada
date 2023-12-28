@@ -38,13 +38,17 @@
             <div class="row">
                 <center>
                     <a class="btn btn-secondary col-12 w-75 mt-4" href="{% url 'user_home' %}">Home</a>
-                    <button type="button" class="btn btn-danger col-12 w-75 mt-2 delete-product" data-index="{{ item.product_id }}" data-product-name="{{ item.product }}">Remove</button>
+                    <button type="button" class="btn btn-danger col-12 w-75 mt-2 mb-2 delete-product" data-index="{{ item.product_id }}" data-product-name="{{ item.product }}">Remove</button>
                 </center>
             </div>
           </div>
         </div>
       </div>
     {% endfor %}
+    <center>
+      <a href="#" class="btn btn-outline-dark">Remove All Items</a>
+      <a href="{% url 'checkout' %}" class="btn btn-dark">Checkout</a>
+    </center>
   {% else %}
     <center>
         <h1 class="mt-5">You have an empty cart</h1>
@@ -82,23 +86,29 @@
       e.preventDefault();
       
       var productName = $(this).data('product-name');
-      $('#deleteModalBody').text(productName + ' was deleted from the cart');
-      $('#deleteModal').modal('show'); 
-      
-      $.ajax({
-          type: 'POST',
-          url: "{% url 'cart_delete' %}",
-          data: {
-              product_id: $(this).data('index'),
-              csrfmiddlewaretoken: '{{ csrf_token }}',
-              action: 'post'
-          },
-          success: function(json) {
-          },
-          error: function(xhr, errmsg, err) {
-              // Handle errors if needed
-          }
-      });
+      if (confirm('Are you sure you want to remove ' + productName + ' from the cart?')) {
+          $('#deleteModalBody').text(productName + ' was deleted from the cart');
+          $('#deleteModal').modal('show'); 
+          
+          $.ajax({
+              type: 'POST',
+              url: "{% url 'cart_delete' %}",
+              data: {
+                  product_id: $(this).data('index'),
+                  csrfmiddlewaretoken: '{{ csrf_token }}',
+                  action: 'post'
+              },
+              success: function(json) {
+
+              },
+              error: function(xhr, errmsg, err) {
+
+              }
+          });
+      } else {
+
+          console.log('Deletion canceled.');
+      }
   });
 </script>
 

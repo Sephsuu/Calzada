@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .cart import Cart
 from eCommerce.models import Product
+from cart.models import Order
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def cart(request):
@@ -35,3 +37,18 @@ def cart_delete(request):
         cart.delete(product=product_id)
         response = JsonResponse({'product': product_id})
         return response
+    
+def order_list(request):
+    orders = Order.objects.prefetch_related('products')
+    return render(request, 'order_list.html', {'orders': orders})
+    
+@login_required
+def checkout(request):
+    cart = Cart(request)
+    order = cart.checkout(request.user) 
+    return render(request, 'cart.html', {'order': order})
+
+def delete_orders(request):
+    cart = Cart(request)
+    cart.delete_all_orders()
+    return render(request, 'order_list.html', {})

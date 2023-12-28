@@ -1,0 +1,58 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header -->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Your Orders</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-4">
+  {% if orders %}
+    {% for order in orders %}
+    <div class="card border-dark mb-3 w-100">
+      <div class="card-header" style="background-color: black;"><center><h3 style="color: white;">Order Details</h3></center></div>
+
+      <div class="card-body text-dark">
+        <center><strong><p>ACCOUNT NAME</p></strong><hr></center>
+        <div class="card-body row">
+          <div class="col-lg-6 col-sm-12">
+            <p>First Name: <strong>{{ order.customer.first_name }}</strong></p><hr>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <p>Last Name: <strong>{{ order.customer.last_name }}</strong></p><hr>
+          </div>
+        </div>
+
+        <center><strong><p>ORDER INFORMATION</p></strong><hr></center>
+        <div class="card-body row">
+          <div class="col-lg-6 col-sm-12">
+            <p>Address: <strong>{{ order.address }}</strong></p><hr>
+            <p>Phone Number: <strong>{{ order.phone }}</strong></p><hr>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <p>Order Date: <strong>{{ order.date }}</strong></p><hr>
+            <p>Order Status: <strong>{{ order.status }}</strong></p><hr>
+          </div>
+        </div>
+
+
+      <div class="card-body text-dark">
+        <h5 class="card-title">Products in Order:</h5><hr>
+          {% for product in order.products.all %}
+            <p>{{ product.name }} x{{ product.quantity }} | ₱{{ product.price }}</p><hr>
+          {% endfor %}
+          <h5>Total Amount: ₱{{ order.total_amount }}</h5>
+      </div>
+    </div>
+      {% endfor %}
+      </div>
+  <center><a href="{% url 'delete_orders' %}" class="btn btn-outline-dark w-100"><strong>Finish Orders</strong></a></center>
+</div>
+{% endif %}
+
+{% endblock %}
