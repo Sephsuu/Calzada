@@ -14,6 +14,7 @@
 <div class="container mt-4">
   {% if orders %}
     {% for order in orders %}
+    {% if order.customer == request.user %}
     <div class="card border-dark mb-3 w-100">
       <div class="card-header" style="background-color: black;"><center><h3 style="color: white;">Order Details</h3></center></div>
 
@@ -49,6 +50,7 @@
           <h5>Total Amount: ₱{{ order.total_amount }}</h5>
       </div>
     </div>
+    {% endif %}
       {% endfor %}
       </div>
       <center><a href="{% url 'delete_orders' %}" class="btn btn-outline-dark w-100"><strong>Finish Orders</strong></a></center>
