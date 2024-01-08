@@ -1,0 +1,24 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- Header-->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Download Activity</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Make sure you follow Sephsuu on Github!!</p>
+        </div>
+    </div>
+</header>
+
+<center>
+    <div class="container col-lg-6 col-sm-12 mt-5 mb-5" style="padding-bottom: 200px;">
+        <a class="btn btn-dark" href="{% static 'assets/ACTIVITY.pdf' %}" download="{% static 'assets/ACTIVITY.pdf' %}">
+            <button class="btn btn-dark">Download PDF</button>
+        </a> 
+    </div>
+</center>
+
+{% endblock %}

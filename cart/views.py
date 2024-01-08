@@ -27,9 +27,6 @@ def cart_add(request):
         response = JsonResponse({'qty: ': cart_quantity})
         return response
 
-def cart_update(request):
-    pass
-
 def cart_delete(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
@@ -39,8 +36,15 @@ def cart_delete(request):
         return response
     
 def order_list(request):
+    cart = Cart(request)
+    products = cart.get_product()
+    print(products)
+    product_qty = [item['quantity'] for item in products]
+    product_tp = [item['total_price'] for item in products]
+    print(product_qty)
+    print(product_tp)
     orders = Order.objects.prefetch_related('products')
-    return render(request, 'order_list.html', {'orders': orders})
+    return render(request, 'order_list.html', {'orders': orders, 'product_qty': product_qty, 'product_tp': product_tp})
     
 @login_required
 def checkout(request):

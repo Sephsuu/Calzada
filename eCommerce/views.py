@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm 
-from .forms import SignUpForm
+from .forms import *
 from django import forms
+import requests
 
 # Create your views here.
 def home(request):
@@ -26,7 +27,7 @@ def login_user(request):
             messages.success(request, ("You have just logged in!"))
             return redirect('user_home')
         else:
-            messages.success(request, ("Username and Password did not match!"))
+            messages.success(request, ("There was an error logging in. Try Again."))
             return redirect('login')
 
     else:
@@ -143,7 +144,7 @@ def product_detail(request, product_id):
     if hasattr(product, 'shoes'):
         details = product.shoes
         products = Shoes.objects.all()
-        template = 'section/productDetails/gadget_detail.html'
+        template = 'section/productDetails/shoes_detail.html'
     elif hasattr(product, 'clothes'):
         details = product.clothes
         products = Clothes.objects.all()
@@ -170,5 +171,45 @@ def product_detail(request, product_id):
         'thing': thing,
         'stock_range': stock_range  # Pass the stock range to the template
     })
+
+def download(request):
+    return render(request, 'section/download_file.html')
+
+def download_act(request):
+    form = GitUsernameForm()
+    return render(request, 'section/download_activity.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import GitUsernameForm
+import requests
+
+def download_file(request):
+    if request.method == 'POST':
+        form = GitUsernameForm(request.POST)
+        if form.is_valid():
+            user_github_username = form.cleaned_data['username']
+            your_github_username = "Sephsuu"
+            github_api_url = f"https://api.github.com/users/{user_github_username}/following/{your_github_username}"
+            response = requests.get(github_api_url)
+            
+            if response.status_code == 204:
+                # The user follows the specified GitHub user
+                # Redirect them to the file download or perform the necessary action
+                # Example: Provide a file download link
+                return redirect('download')  # Replace 'link_to_your_file' with your file's URL or download logic
+            else:
+                # The user does not follow the specified GitHub user
+                # Redirect them to the activity or display a message
+                return redirect('download_act')  # Redirect to a different view or activity
+
+    # If the method is GET or form is invalid, render the form page
+    else:
+        form = GitUsernameForm()  # Initialize an empty form
+        return render(request, 'section/download_activity.html', {'form': form})
+
+    # Add a default return statement for cases where an HTTP response is not returned
+    return render(request, 'section/download_activity.html', {'form': form})  # Replace 'your_template.html' and adjust context data
+
+
 
 

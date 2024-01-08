@@ -42,17 +42,26 @@
         </div>
 
 
-      <div class="card-body text-dark">
-        <h5 class="card-title">Products in Order:</h5><hr>
-          {% for product in order.products.all %}
-            <p>{{ product.name }} x{{ product.quantity }} | ₱{{ product.price }}</p><hr>
-          {% endfor %}
+        <div class="card-body text-dark">
+          <h5 class="card-title">Products in Order:</h5>
+          <hr>
+          <ul>
+              {% for product in order.products.all %}
+                  <li>
+                      <strong>Product Name:</strong> {{ product.name }} |
+                      <strong>Quantity:</strong> {{ product_qty.forloop.counter0 }} |
+                      <strong>Price:</strong> {{ product_tp.forloop.counter0 }} <!-- Adjust this based on your model -->
+                  </li>
+              {% endfor %}
+          </ul>
+          <hr>
           <h5>Total Amount: ₱{{ order.total_amount }}</h5>
       </div>
+      
     </div>
-    {% endif %}
-      {% endfor %}
       </div>
+      {% endif %}
+      {% endfor %}
       <center><a href="{% url 'delete_orders' %}" class="btn btn-outline-dark w-100"><strong>Finish Orders</strong></a></center>
 </div>
 

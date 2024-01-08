@@ -28,7 +28,6 @@ class Cart():
         return len(self.cart)
     
     def get_product(self):
-        global cart_items
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
 
@@ -44,6 +43,8 @@ class Cart():
                 'total_price': total_price, 
                 'image_url': product.image.url,
             })
+
+        print(cart_items)
 
         return cart_items
     
@@ -75,7 +76,6 @@ class Cart():
         for item in products:
             order.products.add(item['product'])
         
-        # Clear the cart after checkout
         self.cart = {}
         self.session['session_key'] = {} 
         self.session.modified = True

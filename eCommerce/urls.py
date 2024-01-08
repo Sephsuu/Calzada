@@ -23,4 +23,8 @@ urlpatterns = [
     path('show_poultry_products_image/', views.show_poultry_products_image, name='show_poultry_products_image'),
     path('search_product', views.search_product, name='search_product'),
     path('product_detail/product_id=<int:product_id>/', views.product_detail, name='product_detail'),
+    path('download_act/', views.download_act, name='download_act'),
+    path('download_file/', views.download_file, name='download_file'),
+    path('download/', views.download, name='download'),
 ]
+

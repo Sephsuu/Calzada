@@ -1,0 +1,28 @@
+{% extends 'section/base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-4 header">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Download Activity</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Make sure you follow Sephsuu on Github!!</p>
+        </div>
+    </div>
+</header>
+
+<center>
+    <div class="container col-lg-6 col-sm-12 mt-5 mb-5" style="padding-bottom: 200px;">
+        <form method="POST" action="{% url 'download_file' %}">
+            {% csrf_token %}
+            {{ form }}
+            <a href="https://github.com/Sephsuu" style="color: black;">Haven't followed Sephsuu yet? Click Here!</a><br>
+            <button type="submit" class="btn btn-dark mt-3">Submit</button>
+        </form>        
+    </div>
+</center>
+
+
+
+{% endblock %}
